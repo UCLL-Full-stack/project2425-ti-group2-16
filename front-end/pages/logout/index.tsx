@@ -6,7 +6,7 @@ const Logout: React.FC = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            sessionStorage.removeItem('loggedInUser');
+            localStorage.removeItem('loggedInUser');
             router.push('/');
         };
     }, []);

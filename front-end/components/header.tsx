@@ -7,7 +7,7 @@ const Header: React.FC = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setLoggedInUser(sessionStorage.getItem('loggedInUser'));
+            setLoggedInUser(localStorage.getItem('loggedInUser'));
         }
     }, []);
     

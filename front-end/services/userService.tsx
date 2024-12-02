@@ -1,4 +1,9 @@
-import { Profile } from "@/types";
+import { Profile, User } from "@/types";
+
+const getToken = () => {
+    const user = localStorage.getItem("loggedInUser") || "";
+    return JSON.parse(user).token
+};
 
 const createUser = (name: string, password: string, profile?: Profile) => {
     const data = {
@@ -18,4 +23,17 @@ const createUser = (name: string, password: string, profile?: Profile) => {
     });
 };
 
-export default { createUser };
+const loginUser = (user: User) => {
+    return fetch(process.env.NEXT_PUBLIC_API_URL + "/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+    });
+};
+
+export default {
+    createUser,
+    loginUser,
+};

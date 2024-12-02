@@ -48,7 +48,7 @@ const RegisterForm = () => {
         if (response.status === 200) {
             const user = await response.json();
 
-            sessionStorage.setItem(
+            localStorage.setItem(
                 'loggedInUser',
                 JSON.stringify({
                     id: user.id,
