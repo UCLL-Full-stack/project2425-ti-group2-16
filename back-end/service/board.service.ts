@@ -10,7 +10,12 @@ const getBoardById = async (id: number): Promise<Board> => {
     return board;
 }
 
+const getBoardsWithGroupId = async (groupId: number): Promise<Board[]> => {
+    return await boardDb.getBoardsWithGroupId(groupId);
+}
+
 export default {
     getAllBoards,
     getBoardById,
+    getBoardsWithGroupId,
 };
