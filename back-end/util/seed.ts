@@ -24,8 +24,29 @@ const main = async () => {
 
     const userLars = await prisma.user.create({
         data: {
-            username: 'lersf',
+            username: 'larsf',
             hashedPassword: await bcrypt.hash('lars123', 10),
+        },
+    });
+
+    const userJeroen = await prisma.user.create({
+        data: {
+            username: 'jeroenr',
+            hashedPassword: await bcrypt.hash('jeroen123', 10),
+        },
+    });
+
+    const userJohan = await prisma.user.create({
+        data: {
+            username: 'johanp',
+            hashedPassword: await bcrypt.hash('johan123', 10),
+        },
+    });
+
+    const userElke = await prisma.user.create({
+        data: {
+            username: 'elkes',
+            hashedPassword: await bcrypt.hash('elke123', 10),
         },
     });
 
@@ -61,7 +82,7 @@ const main = async () => {
             description: 'This is group 1.',
             leader: { connect: { id: userMees.id } },
             users: {
-                connect: [{ id: userLars.id }],
+                connect: [{ id: userLars.id }, { id: userJeroen.id }, { id: userJohan.id }, { id: userElke.id }],
             },
         },
     });
@@ -72,7 +93,7 @@ const main = async () => {
             description: 'This is group 2.',
             leader: { connect: { id: userLars.id } },
             users: {
-                connect: [],
+                connect: [{ id: userMees.id }],
             },
         },
     });

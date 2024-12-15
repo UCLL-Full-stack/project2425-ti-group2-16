@@ -4,7 +4,11 @@ import boardService from '../service/board.service';
 const boardRouter = express.Router();
 
 boardRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    return res.status(200).json(await boardService.getAllBoards());
+    try {
+        return res.status(200).json(await boardService.getAllBoards());
+    } catch (error) {
+        next(error);
+    }
 });
 
 boardRouter.get('/group', async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +22,11 @@ boardRouter.get('/group', async (req: Request, res: Response, next: NextFunction
 });
 
 boardRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    return res.status(200).json(await boardService.getBoardById(parseInt(req.params.id)));
+    try {
+        return res.status(200).json(await boardService.getBoardById(parseInt(req.params.id)));
+    } catch (error) {
+        next(error);
+    }
 });
 
 

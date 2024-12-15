@@ -17,7 +17,7 @@ const Boards: React.FC = () => {
         return response.json();
     };
 
-    const { data: boards = [], error } = useSWR<Board[]>('boards', fetcher);
+    const { data: boards = [], error } = useSWR<Board[]>(groupId ? `group/${groupId}` : null, fetcher);
 
     return (
         <>
