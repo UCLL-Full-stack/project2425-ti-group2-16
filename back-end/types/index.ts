@@ -4,7 +4,8 @@ type UserInput = {
     hashedPassword?: string;
     password?: string;
     profile?: ProfileInput;
-    groups?: GroupInput[];
+    memberOfGroups?: GroupInput[];
+    leaderOfGroups?: GroupInput[];
     tasks?: TaskInput[];
 };
 
@@ -14,6 +15,7 @@ type GroupInput = {
     description?: string;
     createdAt?: Date;
     users?: UserInput[];
+    leader?: UserInput;
     boards?: BoardInput[];
 };
 

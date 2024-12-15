@@ -47,12 +47,13 @@ const registerUser = async ({
             username,
             hashedPassword: await bcrypt.hash(password, 10),
             profile: userProfile,
-            groups: [],
+            memberOfGroups: [],
+            leaderOfGroups: []
         });
     
         userDb.createUser(newUser);
     
-        const JWT = generateJWTtoken(username);
+        const JWT = generateJWTtoken(username, [], []);
         const response = {
             token: JWT,
             username: username,
@@ -68,7 +69,7 @@ const authenticate = async ({ username, password}: { username: string, password:
     const hashedPassword = user.getHashedPassword();
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
     if (passwordsMatch) {
-        const JWT = generateJWTtoken(username);
+        const JWT = generateJWTtoken(username, user.getMemberOfGroups(), user.getLeaderOfGroups());
         const response = {
             token: JWT,
             username: username,

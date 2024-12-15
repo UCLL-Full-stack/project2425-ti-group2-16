@@ -15,20 +15,23 @@ export class User {
     private username: string;
     private hashedPassword: string;
     private profile?: Profile;
-    private groups: Group[];
+    private memberOfGroups: Group[];
+    private leaderOfGroups: Group[];
 
     constructor(user: {
         id?: number;
         username: string;
         hashedPassword: string;
         profile?: Profile;
-        groups?: Group[];
+        memberOfGroups?: Group[];
+        leaderOfGroups?: Group[];
     }) {
         this.id = user.id;
         this.username = user.username;
         this.hashedPassword = user.hashedPassword;
         this.profile = user.profile || undefined;
-        this.groups = user.groups || [];
+        this.memberOfGroups = user.memberOfGroups || [];
+        this.leaderOfGroups = user.leaderOfGroups || [];
     }
 
     // getters
@@ -48,8 +51,12 @@ export class User {
         return this.profile;
     }
 
-    getGroups(): Group[] {
-        return this.groups;
+    getMemberOfGroups(): Group[] {
+        return this.memberOfGroups;
+    }
+
+    getLeaderOfGroups(): Group[] {
+        return this.leaderOfGroups;
     }
 
     // setters
@@ -65,8 +72,12 @@ export class User {
         this.profile = profile;
     }
 
-    setGroups(groups: Group[]): void {
-        this.groups = groups;
+    setMemberOfGroups(groups: Group[]): void {
+        this.memberOfGroups = groups;
+    }
+
+    setLeaderOfGroups(groups: Group[]): void {
+        this.leaderOfGroups = groups;
     }
 
     // methods
@@ -82,8 +93,11 @@ export class User {
             this.username === otherUser.getUsername() &&
             this.hashedPassword === otherUser.getHashedPassword() &&
             profilesAreEqual &&
-            this.groups.every((group, index) => {
-                return group.equals(otherUser.getGroups()[index]);
+            this.memberOfGroups.every((group, index) => {
+                return group.equals(otherUser.getMemberOfGroups()[index]);
+            }) &&
+            this.leaderOfGroups.every((group, index) => {
+                return group.equals(otherUser.getLeaderOfGroups()[index]);
             })
         );
     }
@@ -93,14 +107,30 @@ export class User {
         username,
         hashedPassword,
         profile,
-        groups,
-    }: UserPrisma & { profile: ProfilePrisma | null, groups: (GroupPrisma & { boards: (BoardPrisma & {statuses: (StatusPrisma & {tasks: TaskPrisma[]})[]})[]})[]}) {
+        memberOfGroups,
+        leaderOfGroups,
+    }: UserPrisma & { profile: ProfilePrisma | null, memberOfGroups: (GroupPrisma & {leader: (UserPrisma & {profile: (ProfilePrisma | null)}), boards: (BoardPrisma & {statuses: (StatusPrisma & {tasks: TaskPrisma[]})[]})[]})[], leaderOfGroups: (GroupPrisma & {leader: (UserPrisma & {profile: (ProfilePrisma | null)}), boards: (BoardPrisma & {statuses: (StatusPrisma & {tasks: TaskPrisma[]})[]})[]})[]}) {
         return new User({
             id,
             username,
             hashedPassword,
             profile: profile ? Profile.from(profile) : undefined,
-            groups: groups.map((group) => Group.from(group)),
+            memberOfGroups: memberOfGroups.map((memberOfGroup) => Group.fromWithoutUsers(memberOfGroup)),
+            leaderOfGroups: leaderOfGroups.map((leaderOfGroup) => Group.fromWithoutUsers(leaderOfGroup)),
         });
-    }
+    };
+
+    static fromWithoutGroups({
+        id,
+        username,
+        hashedPassword,
+        profile,
+    }: UserPrisma & { profile: ProfilePrisma | null }) {
+        return new User({
+            id,
+            username,
+            hashedPassword,
+            profile: profile ? Profile.from(profile) : undefined,
+        });
+    };
 }

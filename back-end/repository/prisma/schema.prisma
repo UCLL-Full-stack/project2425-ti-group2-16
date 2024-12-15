@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-    id          Int         @id @default(autoincrement())
-    username    String      @unique
+    id              Int         @id @default(autoincrement())
+    username        String      @unique
     hashedPassword  String
-    profile     Profile?
-    groups      Group[]
+    profile         Profile?
+    memberOfGroups  Group[]     @relation("MemberOfGroups")
+    leaderOfGroups  Group[]     @relation("LeaderOfGroups")
 }
 
 model Profile {
@@ -30,7 +31,9 @@ model Group {
     name        String
     description String
     createdAt   DateTime    @default(now())
-    users       User[]
+    users       User[]      @relation("MemberOfGroups")
+    leader      User        @relation("LeaderOfGroups", fields: [leaderId], references: [id])
+    leaderId    Int
     boards      Board[]
 }
 
@@ -38,7 +41,7 @@ model Board {
     id          Int         @id @default(autoincrement())
     name        String
     description String
-    updatedAt   DateTime    @default(now())
+    createdAt   DateTime    @default(now())
     groupId     Int
     group       Group       @relation(fields: [groupId], references: [id])
     statuses    Status[]

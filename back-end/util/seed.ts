@@ -59,8 +59,9 @@ const main = async () => {
         data: {
             name: 'Group 1',
             description: 'This is group 1.',
+            leader: { connect: { id: userMees.id } },
             users: {
-                connect: [{ id: userMees.id }, { id: userLars.id }],
+                connect: [{ id: userLars.id }],
             },
         },
     });
@@ -69,8 +70,9 @@ const main = async () => {
         data: {
             name: 'Group 2',
             description: 'This is group 2.',
+            leader: { connect: { id: userLars.id } },
             users: {
-                connect: [{ id: userMees.id }],
+                connect: [],
             },
         },
     });

@@ -3,7 +3,8 @@ export type User = {
     username: string;
     hashedPassword: string;
     profile?: Profile;
-    groups: Group[];
+    memberOfGroups: Group[];
+    leaderOfGroups: Group[];
     tasks: Task[];
 };
 
@@ -21,6 +22,7 @@ export type Group = {
     description: string;
     createdAt: Date;
     users: User[];
+    leader: User;
     boards: Board[];
 };
 
