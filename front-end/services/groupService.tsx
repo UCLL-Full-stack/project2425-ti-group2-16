@@ -15,6 +15,18 @@ const getGroups = () => {
     });
 };
 
+const getGroupById = (groupId: string) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups/${groupId}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
 export default {
     getGroups,
+    getGroupById,
 };

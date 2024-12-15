@@ -25,6 +25,7 @@
  */
 import express, { NextFunction, Request, Response } from 'express';
 import groupService from '../service/group.service';
+import { error } from 'console';
 
 const groupRouter = express.Router();
 
@@ -44,7 +45,11 @@ const groupRouter = express.Router();
  *                 $ref: '#/components/schemas/Group'
  */
 groupRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    return res.status(200).json(await groupService.getAllGroups());
+    try {
+        return res.status(200).json(await groupService.getAllGroups());
+    } catch (e) {
+        next(error)
+    }
 });
 
 /**
@@ -68,8 +73,11 @@ groupRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
  *               $ref: '#/components/schemas/Group'
  */
 groupRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    return res.status(200).json(await groupService.getGroupById(parseInt(req.params.id)));
-});
+    try {
+        return res.status(200).json(await groupService.getGroupById(parseInt(req.params.id)));
+    } catch (e) {
+        next(error)
+    }});
 
 
 export { groupRouter };
