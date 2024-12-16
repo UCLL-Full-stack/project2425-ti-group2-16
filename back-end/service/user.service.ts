@@ -57,7 +57,8 @@ const registerUser = async ({
         const response = {
             token: JWT,
             username: username,
-            fullname: `${firstName} ${lastName}`
+            leaderOfGroups: [],
+            memberOfGroups: [],
         };
         return response;
     };
@@ -70,10 +71,11 @@ const authenticate = async ({ username, password}: { username: string, password:
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
     if (passwordsMatch) {
         const JWT = generateJWTtoken(username, user.getMemberOfGroups(), user.getLeaderOfGroups());
-        const response = {
+        const response: AuthenticationResponse = {
             token: JWT,
             username: username,
-            fullname: `${user.getProfile()?.getFirstName()} ${user.getProfile()?.getLastName()}`
+            leaderOfGroups: user.getLeaderOfGroups().map(group => group.getId() as number),
+            memberOfGroups: user.getMemberOfGroups().map(group => group.getId() as number)
         };
         return response;
     } else {

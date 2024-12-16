@@ -53,7 +53,8 @@ const RegisterForm = () => {
                 JSON.stringify({
                     token: autheticationResponse.token,
                     username: autheticationResponse.username,
-                    profile: autheticationResponse.profile
+                    leaderOfGroups: autheticationResponse.leaderOfGroups,
+                    memberOfGroups: autheticationResponse.memberOfGroups,
                 })
             );
 
