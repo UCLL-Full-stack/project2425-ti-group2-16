@@ -17,7 +17,7 @@ const Users: React.FC = () => {
         return response.json();
     };
 
-    const { data: group, error } = useSWR<Group>(groupId ? `group/${groupId}` : null, fetcher);
+    const { data: group, error } = useSWR<Group>(groupId ? `group/${groupId}/management` : null, fetcher);
 
     return (
         <>
@@ -27,9 +27,9 @@ const Users: React.FC = () => {
             </Head>
             <Header />
             <main className={styles.main}>
-                {group && <h1>{group.name}</h1>}
                 {error && <div>Failed to get group</div>}
-                {!error && <GroupManagement group={group} />}
+                {group && <h1>{group.name}</h1>}
+                {!error && group && <GroupManagement group={group} />}
             </main>
         </>
     );

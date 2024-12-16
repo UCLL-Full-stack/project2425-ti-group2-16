@@ -1,14 +1,11 @@
 import React from 'react';
 import { Group } from '@/types';
-import { useRouter } from 'next/router';
 
 interface Props {
-    group: Group | undefined;
+    group: Group;
 }
 
 const GroupManagement: React.FC<Props> = ({ group }) => {
-    const router = useRouter();
-
     return (
         <>
             { group &&

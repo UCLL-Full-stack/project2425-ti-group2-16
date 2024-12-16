@@ -17,7 +17,7 @@ const Boards: React.FC = () => {
         return response.json();
     };
 
-    const { data: boards = [], error } = useSWR<Board[]>(groupId ? `group/${groupId}` : null, fetcher);
+    const { data: boards = [], error } = useSWR<Board[]>(groupId ? `group/${groupId}/boards` : null, fetcher);
 
     return (
         <>
@@ -29,7 +29,7 @@ const Boards: React.FC = () => {
             <main className={styles.main}>
                 <h1>Your Boards</h1>
                 {error && <div>Failed to load boards</div>}
-                {!error && <BoardOverview boards={boards} />}
+                {!error && boards && <BoardOverview boards={boards} />}
             </main>
         </>
     );
