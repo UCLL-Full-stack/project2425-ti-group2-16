@@ -26,6 +26,23 @@ const getGroupById = (groupId: string) => {
     });
 };
 
+const createGroup = (username: string, name: string, description: string) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name,
+            description,
+            username,
+        }),
+    });
+};
+
 const removeUserFromGroup = (groupId: number, userId: number) => {
     const token = getToken();
 
@@ -51,6 +68,7 @@ const addUserToGroup = (groupId: number, userId: number) => {
 export default {
     getGroups,
     getGroupById,
+    createGroup,
     removeUserFromGroup,
-    addUserToGroup
+    addUserToGroup,
 };
