@@ -49,7 +49,14 @@ type ProfileInput = {
 type AuthenticationResponse = {
     token: string;
     username: string;
-    fullname: string;
+    leaderOfGroups: number[];
+    memberOfGroups: number[];
 };
 
-export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse };
+type AuthenticationRequest = {
+    token: string;
+    leaderOfGroups: number[];
+    memberOfGroups: number[];
+};
+
+export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse, AuthenticationRequest };

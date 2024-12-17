@@ -26,7 +26,31 @@ const getGroupById = (groupId: string) => {
     });
 };
 
+const removeUserFromGroup = (groupId: number, userId: number) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups/${groupId}/user/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
+const addUserToGroup = (groupId: number, userId: number) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups/${groupId}/user/${userId}`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
 export default {
     getGroups,
     getGroupById,
+    removeUserFromGroup,
+    addUserToGroup
 };

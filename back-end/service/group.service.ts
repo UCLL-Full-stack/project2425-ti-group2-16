@@ -8,9 +8,19 @@ const getAllGroups = async (): Promise<Group[]> => {
 const getGroupById = async (id: number): Promise<Group> => {
     const group = await groupDb.getGroupById({id});
     return group;
-}
+};
+
+const removeUserFromGroup = async (groupId: number, userId: number): Promise<void> => {
+    await groupDb.removeUserFromGroup({groupId, userId});
+};
+
+const addUserToGroup = async (groupId: number, userId: number): Promise<void> => {
+    await groupDb.addUserToGroup({groupId, userId});
+};
 
 export default {
     getAllGroups,
     getGroupById,
+    removeUserFromGroup,
+    addUserToGroup,
 };

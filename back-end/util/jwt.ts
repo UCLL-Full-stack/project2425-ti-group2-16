@@ -9,7 +9,10 @@ const generateJWTtoken = (username: string, memberOfGroups: Group[], leaderOfGro
         throw new Error('JWT_SECRET is not defined.');
     };
 
-    return jwt.sign({ username, memberOfGroups, leaderOfGroups }, secret, { expiresIn: expiresIn });
+    const memberOfGroupsId = memberOfGroups.map(group => group.getId());
+    const leaderOfGroupsId = leaderOfGroups.map(group => group.getId());
+
+    return jwt.sign({ username, memberOfGroupsId, leaderOfGroupsId }, secret, { expiresIn: expiresIn });
 }
 
 export { generateJWTtoken };

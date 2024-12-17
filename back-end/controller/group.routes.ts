@@ -77,7 +77,24 @@ groupRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) 
         return res.status(200).json(await groupService.getGroupById(parseInt(req.params.id)));
     } catch (e) {
         next(error)
-    }});
+    };
+});
+
+groupRouter.post('/:id/user/:userId', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        return res.status(200).json(await groupService.addUserToGroup(parseInt(req.params.id), parseInt(req.params.userId)));
+    } catch (e) {
+        next(error)
+    }
+});
+
+groupRouter.delete('/:id/user/:userId', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        return res.status(200).json(await groupService.removeUserFromGroup(parseInt(req.params.id), parseInt(req.params.userId)));
+    } catch (e) {
+        next(error)
+    }
+});
 
 
 export { groupRouter };
