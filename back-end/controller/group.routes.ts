@@ -80,6 +80,14 @@ groupRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) 
     };
 });
 
+groupRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        return res.status(200).json(await groupService.createGroup(req.body));
+    } catch (e) {
+        next(error)
+    }
+});
+
 groupRouter.post('/:id/user/:userId', async (req: Request, res: Response, next: NextFunction) => {
     try {
         return res.status(200).json(await groupService.addUserToGroup(parseInt(req.params.id), parseInt(req.params.userId)));
