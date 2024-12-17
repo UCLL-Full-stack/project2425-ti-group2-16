@@ -14,8 +14,13 @@ const removeUserFromGroup = async (groupId: number, userId: number): Promise<voi
     await groupDb.removeUserFromGroup({groupId, userId});
 };
 
+const addUserToGroup = async (groupId: number, userId: number): Promise<void> => {
+    await groupDb.addUserToGroup({groupId, userId});
+};
+
 export default {
     getAllGroups,
     getGroupById,
     removeUserFromGroup,
+    addUserToGroup,
 };

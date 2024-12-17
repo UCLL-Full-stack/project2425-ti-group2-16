@@ -5,9 +5,10 @@ import groupService from '@/services/groupService';
 
 interface Props {
     group: Group;
+    openAddUserPopup: (popup: boolean) => void;
 }
 
-const GroupManagement: React.FC<Props> = ({ group }) => {
+const GroupManagement: React.FC<Props> = ({ group, openAddUserPopup }) => {
     const removeUser = (userId?: number) => async () => {
         if (!userId || !group.id) {
             return;
@@ -20,6 +21,7 @@ const GroupManagement: React.FC<Props> = ({ group }) => {
 
     return (
         <>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" onClick={() => openAddUserPopup(true)}>Add user</button>
             <table className="min-w-full bg-white border border-gray-200">
                 <thead>
                     <tr className="w-full bg-gray-100">
