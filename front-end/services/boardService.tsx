@@ -24,7 +24,25 @@ const getBoardsWithGroupId = (groupId: String) => {
     });
 };
 
+const createBoard = (name: string, description: string, groupId: number) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/boards`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            name,
+            description,
+            groupId,
+        }),
+    });
+};
+
 export default {
     getBoards,
     getBoardsWithGroupId,
+    createBoard,
 };

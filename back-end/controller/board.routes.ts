@@ -29,5 +29,14 @@ boardRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
+boardRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { name, description, groupId } = req.body;
+        return res.status(201).json(await boardService.createBoard(name, description, Number(groupId)));
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 export { boardRouter };

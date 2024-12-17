@@ -52,10 +52,28 @@ const getBoardsWithGroupId = async (groupId: number): Promise<Board[]> => {
         console.log(error);
         throw new Error('Database error, see server log for details.');
     };
-}
+};
+
+const createBoard = async ({ name, description, groupId }: { name: string, description: string, groupId: number }): Promise<Board> => {
+    try {
+        const boardPrisma = await database.board.create({
+            data: {
+                name,
+                description,
+                groupId
+            },
+            include: everything
+        });
+        return Board.from(boardPrisma);
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    };
+};
 
 export default {
     getAllBoards,
     getBoardById,
     getBoardsWithGroupId,
+    createBoard,
 };
