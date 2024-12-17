@@ -26,7 +26,19 @@ const getGroupById = (groupId: string) => {
     });
 };
 
+const removeUserFromGroup = (groupId: number, userId: number) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups/${groupId}/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
 export default {
     getGroups,
     getGroupById,
+    removeUserFromGroup,
 };

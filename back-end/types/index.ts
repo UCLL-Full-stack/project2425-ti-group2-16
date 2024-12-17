@@ -53,4 +53,10 @@ type AuthenticationResponse = {
     memberOfGroups: number[];
 };
 
-export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse };
+type AuthenticationRequest = {
+    token: string;
+    leaderOfGroups: number[];
+    memberOfGroups: number[];
+};
+
+export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse, AuthenticationRequest };

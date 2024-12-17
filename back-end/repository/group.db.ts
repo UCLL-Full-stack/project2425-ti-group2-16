@@ -53,7 +53,28 @@ const getGroupById = async ({ id }: { id: number }): Promise<Group> => {
     };
 };
 
+const removeUserFromGroup = async ({ groupId, userId }: { groupId: number, userId: number }): Promise<void> => {
+    try {
+        await database.group.update({
+            where: {
+                id: groupId
+            },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    };
+}
+
 export default {
     getAllGroups,
     getGroupById,
+    removeUserFromGroup
 };
