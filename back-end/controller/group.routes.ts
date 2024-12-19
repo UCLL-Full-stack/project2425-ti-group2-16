@@ -7,7 +7,7 @@
  *      scheme: bearer
  *      bearerFormat: JWT
  *    schemas:
- *      User:
+ *      Group:
  *          type: object
  *          properties:
  *            id:
@@ -19,7 +19,7 @@
  *            description:
  *              type: string
  *              description: Group description.
- *           createdAt:
+ *            createdAt:
  *              type: Date
  *              description: Group creation date.
  */
@@ -32,8 +32,10 @@ const groupRouter = express.Router();
 
 /**
  * @swagger
- * /Groups:
+ * /groups:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get a list of all groups.
  *     responses:
  *       200:
@@ -55,8 +57,10 @@ groupRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
 
 /**
  * @swagger
- * /Groups/{id}:
+ * /groups/{id}:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get a group with a specific id.
  *     parameters:
  *       - in: path
@@ -109,6 +113,5 @@ groupRouter.delete('/:id/user/:userId', async (req: Request, res: Response, next
         next(error)
     }
 });
-
 
 export { groupRouter };

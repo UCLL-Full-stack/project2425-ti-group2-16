@@ -19,6 +19,15 @@
  *            hashedPassword:
  *              type: string
  *              description: User password.
+ *      UserInput:
+ *          type: object
+ *          properties:
+ *            username:
+ *              type: string
+ *              description: username
+ *            password:
+ *              type: string
+ *              description: password
  */
 import express, { NextFunction, Request, Response } from 'express';
 import userService from '../service/user.service';
@@ -28,8 +37,10 @@ const userRouter = express.Router();
 
 /**
  * @swagger
- * /Users:
+ * /users:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get a list of all users.
  *     responses:
  *       200:
@@ -47,8 +58,10 @@ userRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swagger
- * /Users/{id}:
+ * /users/{id}:
  *   get:
+ *     security:
+ *      - bearerAuth: []
  *     summary: Get a User with a specific id.
  *     parameters:
  *       - in: path
@@ -69,6 +82,25 @@ userRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) =
     return res.status(200).json(await userService.getUserById(parseInt(req.params.id)));
 });
 
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     summary: Create a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/UserInput"
+ *     responses:
+ *       200:
+ *         description: The created user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/User"
+ */
 userRouter.post('/register', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.body as UserInput;
@@ -80,16 +112,33 @@ userRouter.post('/register', async (req: Request, res: Response, next: NextFunct
     }
 });
 
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Login as a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/UserInput"
+ *     responses:
+ *       200:
+ *         description: The logged in user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/User"
+ */
 userRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const input = <{username: string, password: string}>req.body
-            const JWT = await userService.authenticate(input);
-            res.status(200).json(JWT);
-        } catch (error) {
-            next(error);
-        }
+    try {
+        const input = <{ username: string; password: string }>req.body;
+        const JWT = await userService.authenticate(input);
+        res.status(200).json(JWT);
+    } catch (error) {
+        next(error);
     }
-)
-
+});
 
 export { userRouter };
