@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
     content: JSX.Element;
-    setPopup: (popup: boolean) => void;
+    setPopup: (popup: any) => void;
 }
 
 const Popup: React.FC<Props> = ({ content, setPopup }) => {

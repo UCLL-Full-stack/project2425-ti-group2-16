@@ -170,7 +170,7 @@ const main = async () => {
         data: {
             name: 'Status 1',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -179,7 +179,7 @@ const main = async () => {
         data: {
             name: 'Status 2',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -188,7 +188,7 @@ const main = async () => {
         data: {
             name: 'Status 3',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -197,7 +197,7 @@ const main = async () => {
         data: {
             name: 'Status 1',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group2board1.id },
             },
         },
     });
@@ -206,7 +206,7 @@ const main = async () => {
         data: {
             name: 'Status 2',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group2board1.id },
             },
         },
     });
@@ -216,10 +216,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'High',
-            storyPoints: 5,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 13, minutes: 30 }),
             status: {
                 connect: { id: group1board1status1.id },
             },
@@ -230,10 +226,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 15, minutes: 45 }),
             status: {
                 connect: { id: group1board1status1.id },
             },
@@ -244,10 +236,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Low',
-            storyPoints: 2,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 12, minutes: 15 }),
             status: {
                 connect: { id: group1board1status2.id },
             },
@@ -258,10 +246,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'High',
-            storyPoints: 8,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 14, minutes: 30 }),
             status: {
                 connect: { id: group1board1status2.id },
             },
@@ -272,10 +256,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 13, minutes: 45 }),
             status: {
                 connect: { id: group1board1status3.id },
             },
@@ -286,10 +266,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Low',
-            storyPoints: 1,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 16, minutes: 30 }),
             status: {
                 connect: { id: group1board1status3.id },
             },
@@ -300,10 +276,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'High',
-            storyPoints: 5,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 14, minutes: 45 }),
             status: {
                 connect: { id: group1board1status4.id },
             },
@@ -314,10 +286,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 17, minutes: 30 }),
             status: {
                 connect: { id: group1board1status4.id },
             },
@@ -328,10 +296,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Low',
-            storyPoints: 2,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 13, minutes: 15 }),
             status: {
                 connect: { id: group1board2status1.id },
             },
@@ -342,10 +306,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'High',
-            storyPoints: 8,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 15, minutes: 30 }),
             status: {
                 connect: { id: group1board2status1.id },
             },
@@ -356,10 +316,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 12, minutes: 45 }),
             status: {
                 connect: { id: group1board2status2.id },
             },
@@ -370,10 +326,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Low',
-            storyPoints: 1,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 16, minutes: 30 }),
             status: {
                 connect: { id: group1board2status2.id },
             },
@@ -384,10 +336,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'High',
-            storyPoints: 5,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 13, minutes: 45 }),
             status: {
                 connect: { id: group1board2status3.id },
             },
@@ -398,10 +346,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 17, minutes: 30 }),
             status: {
                 connect: { id: group1board2status3.id },
             },
@@ -412,10 +356,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Low',
-            storyPoints: 2,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 13, minutes: 15 }),
             status: {
                 connect: { id: group2board1status1.id },
             },
@@ -426,10 +366,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'High',
-            storyPoints: 8,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 15, minutes: 30 }),
             status: {
                 connect: { id: group2board1status1.id },
             },
@@ -440,10 +376,6 @@ const main = async () => {
         data: {
             name: 'Task 1',
             description: 'This is task 1.',
-            priority: 'Medium',
-            storyPoints: 3,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 12, minutes: 45 }),
             status: {
                 connect: { id: group2board1status2.id },
             },
@@ -454,10 +386,6 @@ const main = async () => {
         data: {
             name: 'Task 2',
             description: 'This is task 2.',
-            priority: 'Low',
-            storyPoints: 1,
-            startDate: new Date(),
-            endDate: set(new Date(), { hours: 16, minutes: 30 }),
             status: {
                 connect: { id: group2board1status2.id },
             },

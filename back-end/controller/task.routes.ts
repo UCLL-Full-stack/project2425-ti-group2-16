@@ -19,18 +19,6 @@
  *            description:
  *              type: string
  *              description: Task description.
- *            priority:
- *              type: string
- *              description: Task priority
- *            storyPoints:
- *              type: number
- *              format: int64
- *            startDate:
- *              type: string
- *              format: date
- *            endDate:
- *              type: string
- *              format: date
  *      TaskInput:
  *          type: object
  *          properties:
@@ -40,18 +28,6 @@
  *            description:
  *              type: string
  *              description: task description
- *            priority:
- *              type: string
- *              description: task priority
- *            storyPoints:
- *              type: number
- *              format: int64
- *            startDate:
- *              type: string
- *              format: date
- *            endDate:
- *              type: string
- *              format: date
  */
 import express, { NextFunction, Request, Response } from 'express';
 import taskService from '../service/task.service';
@@ -101,6 +77,10 @@ taskRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
  */
 taskRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     return res.status(200).json(await taskService.getTaskById(parseInt(req.params.id)));
+});
+
+taskRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    return res.status(201).json(await taskService.createTask(req.body));
 });
 
 export { taskRouter };

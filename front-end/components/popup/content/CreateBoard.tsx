@@ -1,4 +1,5 @@
 import boardService from '@/services/boardService';
+import { Status } from '@/types';
 import React from 'react';
 import { mutate } from 'swr';
 
@@ -10,11 +11,12 @@ interface Props {
 const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
     const [name, setName] = React.useState<string>('');
     const [description, setDescription] = React.useState<string>('');
+    const [template, setTemplate] = React.useState<string>('kanban');
 
     const [error, setError] = React.useState<string | null>(null);
 
-    const createBoard = async () => {
-        const response = await boardService.createBoard(name, description, groupId);
+    const createBoard = async (statuses: Status[]) => {
+        const response = await boardService.createBoard(name, description, groupId, statuses);
         if (response.ok) {
             mutate(`group/${groupId}/boards`);
             setPopup(false);
@@ -28,8 +30,32 @@ const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
         if (!name) {
             setError('Name is required.');
             return;
+        };
+
+        let statuses: Status[] = [];
+        if (template === 'kanban') {
+            statuses = [
+                { name: 'To Do' },
+                { name: 'In Progress' },
+                { name: 'Done' }
+            ];
+        } else if (template === 'mad sad glad') {
+            statuses = [
+                { name: 'Mad' },
+                { name: 'Sad' },
+                { name: 'Glad' }
+            ];
+        } else if (template === 'bug reports') {
+            statuses = [
+                { name: 'Open' },
+                { name: 'In Progress' },
+                { name: 'Resolved' },
+                { name: 'Closed' }
+            ];
         }
-        createBoard();
+
+
+        createBoard(statuses);
     };
 
     return (
@@ -53,6 +79,17 @@ const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
                 />
+                <select
+                    className='border border-gray-200 rounded p-2 m-2'
+                    name="termplate"
+                    id="template"
+                    value={template}
+                    onChange={(event) => setTemplate(event.target.value)}
+                >
+                    <option value="kanban">Kanban</option>
+                    <option value="mad sad glad">Mad Sad Glad</option>
+                    <option value="bug reports">Bug Reports</option>
+                </select>
                 <button
                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700"
                     onClick={() => handleSubmit()}

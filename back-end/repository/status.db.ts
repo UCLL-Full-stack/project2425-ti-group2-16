@@ -37,7 +37,29 @@ const getStatusById = async ({ id }: { id: number }): Promise<Status> => {
     }
 };
 
+const createStatus = async ({ name, boardId }: { name: string, boardId: number }): Promise<Status> => {
+    try {
+        const statusPrisma = await database.status.create({
+            data: {
+                name,
+                board: {
+                    connect: {
+                        id: boardId,
+                    },
+                },
+                tasks: {},
+            },
+            include: everything
+        });
+        return Status.from(statusPrisma);
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    }
+}
+
 export default {
     getAllStatuses,
     getStatusById,
+    createStatus,
 };

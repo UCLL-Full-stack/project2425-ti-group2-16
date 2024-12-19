@@ -31,7 +31,6 @@ const Boards: React.FC = () => {
 
     const { data: boards = [], error } = useSWR<Board[]>(groupId ? `group/${groupId}/boards` : null, fetcher);
 
-    console.log(boards);
     return (
         <>
             <Head>
@@ -48,7 +47,7 @@ const Boards: React.FC = () => {
                     > Create Board </button>
                 }
                 {error && <div>Failed to load boards</div>}
-                {!error && boards && <BoardOverview boards={boards} />}
+                {!error && boards && <BoardOverview groupId={Number(groupId)} boards={boards} />}
                 {popup && <Popup setPopup={setPopup} content={<CreateBoard setPopup={setPopup} groupId={Number(groupId)}/>} />}
             </main>
         </>

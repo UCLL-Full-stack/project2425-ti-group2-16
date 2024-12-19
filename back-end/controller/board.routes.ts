@@ -165,13 +165,13 @@ boardRouter.post('/', async (req: Request, res: Response, next: NextFunction) =>
     try {
         const request = req as Request & { auth: { leaderOfGroupsId: number[] } };
         const leaderOfGroupsId = request.auth.leaderOfGroupsId;
-        const { name, description, groupId } = request.body;
+        const { name, description, groupId, statuses } = request.body;
+        console.log(request.body);
         if (!leaderOfGroupsId.includes(Number(groupId))) {
             return res.status(401).json({ message: 'You are not the leader of this group' });
-        }
         return res
             .status(201)
-            .json(await boardService.createBoard(name, description, Number(groupId)));
+            .json(await boardService.createBoard(name, description, Number(groupId), statuses));
     } catch (error) {
         next(error);
     }

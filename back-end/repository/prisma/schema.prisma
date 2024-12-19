@@ -60,10 +60,6 @@ model Task {
     id          Int         @id @default(autoincrement())
     name        String
     description String
-    priority    String
-    storyPoints Int
-    startDate   DateTime
-    endDate     DateTime
     statusId    Int
     status      Status      @relation(fields: [statusId], references: [id])
 }
