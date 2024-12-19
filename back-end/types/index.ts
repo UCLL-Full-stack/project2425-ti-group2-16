@@ -31,10 +31,6 @@ type TaskInput = {
     id?: number;
     name?: string;
     description?: string;
-    priority?: string;
-    storyPoints?: number;
-    startDate?: Date;
-    endDate?: Date;
     users?: UserInput[];
 };
 

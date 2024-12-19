@@ -35,10 +35,6 @@ const createTask = async (task: TaskInput & { statusId: number}): Promise<Task> 
             data: {
                 name: task.name || 'New Task',
                 description: task.description || '',
-                priority: task.priority || '',
-                storyPoints: task.storyPoints || 0,
-                startDate: task.startDate || '',
-                endDate: task.endDate || '',
                 status: {
                     connect: {
                         id: task.statusId

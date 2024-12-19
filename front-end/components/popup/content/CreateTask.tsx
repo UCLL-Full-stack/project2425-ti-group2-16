@@ -12,10 +12,6 @@ interface Props {
 const CreateTask: React.FC<Props> = ({ setPopup ,status, boardId }) => {
     const [name, setName] = React.useState<string>('');
     const [description, setDescription] = React.useState<string>('');
-    const [priority, setPriority] = React.useState<number>(0);
-    const [storyPoints, setStoryPoints] = React.useState<number>(0);
-    const [startDate, setStartDate] = React.useState<string>('');
-    const [endDate, setEndDate] = React.useState<string>('');
 
     const [nameError, setNameError] = React.useState<string | null>(null);
     const [error, setError] = React.useState<string | null>(null);
@@ -25,7 +21,7 @@ const CreateTask: React.FC<Props> = ({ setPopup ,status, boardId }) => {
             setError('Failed to create task.');
             return;
         }
-        const response = await taskService.createTask(name, description, priority, storyPoints, startDate, endDate, status.id);
+        const response = await taskService.createTask(name, description, status.id);
         if (response.ok) {
             mutate(`board${boardId}`);
             setPopup(null);
@@ -65,38 +61,6 @@ const CreateTask: React.FC<Props> = ({ setPopup ,status, boardId }) => {
                     id="description"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
-                />
-                <input
-                    className="border border-gray-200 rounded p-2 m-2"
-                    type="number"
-                    placeholder="Priority"
-                    id="priority"
-                    value={priority}
-                    onChange={(event) => setPriority(parseInt(event.target.value))}
-                />
-                <input
-                    className="border border-gray-200 rounded p-2 m-2"
-                    type="number"
-                    placeholder="Story Points"
-                    id="storyPoints"
-                    value={storyPoints}
-                    onChange={(event) => setStoryPoints(parseInt(event.target.value))}
-                />
-                <input
-                    className="border border-gray-200 rounded p-2 m-2"
-                    type="date"
-                    placeholder="Start Date"
-                    id="startDate"
-                    value={startDate}
-                    onChange={(event) => setStartDate(event.target.value)}
-                />
-                <input
-                    className="border border-gray-200 rounded p-2 m-2"
-                    type="date"
-                    placeholder="End Date"
-                    id="endDate"
-                    value={endDate}
-                    onChange={(event) => setEndDate(event.target.value)}
                 />
                 <button
                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700"

@@ -44,11 +44,6 @@ export type Task = {
     id?: number;
     name: string;
     description: string;
-    priority: string;
-    storyPoints: number;
-    startDate: Date;
-    endDate: Date;
-    users: User[];
 };
 
 export type JWT = {
