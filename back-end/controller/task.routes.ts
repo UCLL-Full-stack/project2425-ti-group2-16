@@ -31,6 +31,27 @@
  *            endDate:
  *              type: string
  *              format: date
+ *      TaskInput:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *              description: task name
+ *            description:
+ *              type: string
+ *              description: task description
+ *            priority:
+ *              type: string
+ *              description: task priority
+ *            storyPoints:
+ *              type: number
+ *              format: int64
+ *            startDate:
+ *              type: string
+ *              format: date
+ *            endDate:
+ *              type: string
+ *              format: date
  */
 import express, { NextFunction, Request, Response } from 'express';
 import taskService from '../service/task.service';

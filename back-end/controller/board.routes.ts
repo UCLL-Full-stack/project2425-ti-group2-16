@@ -26,6 +26,19 @@
  *              type: array
  *              items:
  *                $ref: "#/components/schemas/Task"
+ *      BoardInput:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *              description: board name
+ *            description:
+ *              type: string
+ *              description: Description of the board
+ *            statuses:
+ *              type: array
+ *              items:
+ *                $ref: "#/components/schemas/TaskInput"
  */
 import express, { NextFunction, Request, Response } from 'express';
 import boardService from '../service/board.service';
@@ -57,14 +70,39 @@ boardRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
+/**
+ * @swagger
+ * /boards:
+ *   get:
+ *     security:
+ *      - bearerAuth: []
+ *     summary: Get all boards
+ *     parameters:
+ *      - in: query
+ *        name: groupId
+ *        schema:
+ *          type: integer
+ *          description: the group id
+ *     responses:
+ *       200:
+ *         description: Boards with group id groupId.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Board"
+ */
 boardRouter.get('/group', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const groupId = Number(req.query.groupId);;
-        const request = req as Request & { auth: {leaderOfGroupsId: number[], memberOfGroupsId: number[]} };
-        const {leaderOfGroupsId, memberOfGroupsId} = request.auth;
+        const groupId = Number(req.query.groupId);
+        const request = req as Request & {
+            auth: { leaderOfGroupsId: number[]; memberOfGroupsId: number[] };
+        };
+        const { leaderOfGroupsId, memberOfGroupsId } = request.auth;
         if (![...leaderOfGroupsId, ...memberOfGroupsId].includes(Number(groupId))) {
             return res.status(401).json({ message: 'You are not in this group' });
-        };
+        }
         const boards = await boardService.getBoardsWithGroupId(groupId);
         return res.status(200).json(boards);
     } catch (error) {
@@ -102,15 +140,38 @@ boardRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
+/**
+ * @swagger
+ * /boards:
+ *   post:
+ *     security:
+ *      - bearerAuth: []
+ *     summary: Create a new board
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/BoardInput"
+ *     responses:
+ *       200:
+ *         description: The created board
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Board"
+ */
 boardRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const request = req as Request & { auth: {leaderOfGroupsId: number[]} };
+        const request = req as Request & { auth: { leaderOfGroupsId: number[] } };
         const leaderOfGroupsId = request.auth.leaderOfGroupsId;
         const { name, description, groupId } = request.body;
         if (!leaderOfGroupsId.includes(Number(groupId))) {
             return res.status(401).json({ message: 'You are not the leader of this group' });
-        };
-        return res.status(201).json(await boardService.createBoard(name, description, Number(groupId)));
+        }
+        return res
+            .status(201)
+            .json(await boardService.createBoard(name, description, Number(groupId)));
     } catch (error) {
         next(error);
     }
