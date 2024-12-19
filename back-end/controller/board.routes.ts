@@ -16,7 +16,6 @@ boardRouter.get('/group', async (req: Request, res: Response, next: NextFunction
         const groupId = Number(req.query.groupId);;
         const request = req as Request & { auth: {leaderOfGroupsId: number[], memberOfGroupsId: number[]} };
         const {leaderOfGroupsId, memberOfGroupsId} = request.auth;
-        console.log(leaderOfGroupsId, memberOfGroupsId);
         if (![...leaderOfGroupsId, ...memberOfGroupsId].includes(Number(groupId))) {
             return res.status(401).json({ message: 'You are not in this group' });
         };

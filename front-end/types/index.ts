@@ -50,3 +50,10 @@ export type Task = {
     endDate: Date;
     users: User[];
 };
+
+export type JWT = {
+    token?: string;
+    username?: string;
+    memberOfGroups?: number[];
+    leaderOfGroups?: number[];
+};
