@@ -26,6 +26,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import groupService from '../service/group.service';
 import { error } from 'console';
+import userService from '../service/user.service';
 
 const groupRouter = express.Router();
 
@@ -85,7 +86,9 @@ groupRouter.post('/', async (req: Request, res: Response, next: NextFunction) =>
         const request = req as Request & { auth: {username: string} };
         const { username } = request.auth;
         const { name, description } = req.body;
-        return res.status(200).json(await groupService.createGroup({ name, description, username }));
+        await groupService.createGroup({ name, description, username });
+        const newJWT = await userService.getJWT(username);
+        return res.status(200).json(newJWT);
     } catch (e) {
         next(error)
     }

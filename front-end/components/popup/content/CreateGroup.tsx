@@ -16,6 +16,18 @@ const CreateGroup: React.FC<Props> = ({setPopup}) => {
     const createGroup = async (name: string, description: string) => {
         const response = await groupService.createGroup(name, description);
         if (response.ok) {
+            const autheticationResponse = await response.json();
+
+            sessionStorage.setItem(
+                'loggedInUser',
+                JSON.stringify({
+                    token: autheticationResponse.token,
+                    username: autheticationResponse.username,
+                    leaderOfGroups: autheticationResponse.leaderOfGroups,
+                    memberOfGroups: autheticationResponse.memberOfGroups,
+                })
+            );
+            
             mutate('groups');
             setPopup(false);
         } else {
