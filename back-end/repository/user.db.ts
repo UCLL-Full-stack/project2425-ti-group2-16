@@ -3,7 +3,7 @@ import database from './database';
 
 const everything = {
     profile: true,
-    groups: {
+    memberOfGroups: {
         include: {
             boards: {
                 include: {
@@ -12,6 +12,39 @@ const everything = {
                             tasks: true
                         }
                     }
+                }
+            },
+            users: {
+                include: {
+                    profile: true
+                }
+            },
+            leader: {
+                include: {
+                    profile: true
+                }
+            }
+        }
+    },
+    leaderOfGroups: {
+        include: {
+            boards: {
+                include: {
+                    statuses: {
+                        include: {
+                            tasks: true
+                        }
+                    }
+                }
+            },
+            users: {
+                include: {
+                    profile: true
+                }
+            },
+            leader: {
+                include: {
+                    profile: true
                 }
             }
         }

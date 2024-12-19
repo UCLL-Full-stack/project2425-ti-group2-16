@@ -10,6 +10,7 @@ import { boardRouter } from './controller/board.routes';
 import { statusRouter } from './controller/status.routes';
 import { taskRouter } from './controller/task.routes';
 import helmet from 'helmet';
+import { expressjwt } from 'express-jwt';
 
 const app = express();
 dotenv.config();
@@ -17,15 +18,6 @@ app.use(helmet());
 const port = process.env.APP_PORT || 3000;
 
 app.use(cors({ origin: 'http://localhost:8080' }));
-app.use(bodyParser.json());
-
-app.use('/users', userRouter);
-app.use('/groups', groupRouter);
-app.use('/boards', boardRouter);
-app.use('/statuses', statusRouter);
-app.use('/tasks', taskRouter);
-
-app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/status', (req, res) => {
@@ -44,6 +36,22 @@ const swaggerOpts = {
 };
 const swaggerSpec = swaggerJSDoc(swaggerOpts);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+app.use(
+    expressjwt({
+        secret: process.env.JWT_SECRET || 'default_secret',
+        algorithms: ['HS256'],
+    }).unless({
+        path: ['/api-docs', '/users/login', '/users/register', '/status']
+    })
+);
+
+app.use('/users', userRouter);
+app.use('/groups', groupRouter);
+app.use('/boards', boardRouter);
+app.use('/statuses', statusRouter);
+app.use('/tasks', taskRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err.name === 'UnauthorizedError') {

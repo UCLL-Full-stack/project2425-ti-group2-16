@@ -18,7 +18,7 @@ const Header: React.FC = () => {
                 Kanban Esoteric Edition
             </a>
             <nav className="nav justify-content-center">
-                <Link href="/" className="nav-link px-4 fs-5 text-white">
+            <Link href="/" className="nav-link px-4 fs-5 text-white">
                     Home
                 </Link>
                 { !loggedInUser &&
@@ -33,6 +33,9 @@ const Header: React.FC = () => {
                 }
                 { loggedInUser &&
                 <>
+                    <Link href="/groups" className="nav-link px-4 fs-5 text-white">
+                        Groups
+                    </Link>
                     <Link href="/logout" className="nav-link px-4 fs-5 text-white">
                         Logout
                     </Link>

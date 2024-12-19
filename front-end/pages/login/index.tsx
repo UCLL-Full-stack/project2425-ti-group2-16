@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import Header from '@components/header';
-import LoginForm from '@components/loginForm';
+import Header from '@/components/Header';
+import LoginForm from '@/components/LoginForm';
 import styles from '@styles/home.module.css';
 
 

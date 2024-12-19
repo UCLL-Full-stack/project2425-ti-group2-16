@@ -84,7 +84,7 @@ userRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) =
 
 /**
  * @swagger
- * /users:
+ * /users/register:
  *   post:
  *     summary: Create a user
  *     requestBody:
@@ -101,7 +101,7 @@ userRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) =
  *             schema:
  *               $ref: "#/components/schemas/User"
  */
-userRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+userRouter.post('/register', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.body as UserInput;
         const JWT = await userService.registerUser(user);

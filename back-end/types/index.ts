@@ -4,7 +4,8 @@ type UserInput = {
     hashedPassword?: string;
     password?: string;
     profile?: ProfileInput;
-    groups?: GroupInput[];
+    memberOfGroups?: GroupInput[];
+    leaderOfGroups?: GroupInput[];
     tasks?: TaskInput[];
 };
 
@@ -14,6 +15,7 @@ type GroupInput = {
     description?: string;
     createdAt?: Date;
     users?: UserInput[];
+    leader?: UserInput;
     boards?: BoardInput[];
 };
 
@@ -47,7 +49,14 @@ type ProfileInput = {
 type AuthenticationResponse = {
     token: string;
     username: string;
-    fullname: string;
+    leaderOfGroups: number[];
+    memberOfGroups: number[];
 };
 
-export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse };
+type AuthenticationRequest = {
+    token: string;
+    leaderOfGroups: number[];
+    memberOfGroups: number[];
+};
+
+export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse, AuthenticationRequest };

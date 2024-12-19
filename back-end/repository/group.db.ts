@@ -10,6 +10,16 @@ const everything = {
                 }
             }
         }
+    },
+    users: {
+        include: {
+            profile: true
+        }
+    },
+    leader: {
+        include: {
+            profile: true
+        }
     }
 };
 
@@ -43,7 +53,67 @@ const getGroupById = async ({ id }: { id: number }): Promise<Group> => {
     };
 };
 
+const createGroup = async ({ name, description, leaderId }: { name: string, description: string, leaderId: number }): Promise<Group> => {
+    try {
+        const groupPrisma = await database.group.create({
+            data: {
+                name,
+                description,
+                leaderId
+            },
+            include: everything
+        });
+        return Group.from(groupPrisma);
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    };
+};
+
+const removeUserFromGroup = async ({ groupId, userId }: { groupId: number, userId: number }): Promise<void> => {
+    try {
+        await database.group.update({
+            where: {
+                id: groupId
+            },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    };
+}
+
+const addUserToGroup = async ({ groupId, userId }: { groupId: number, userId: number }): Promise<void> => {
+    try {
+        await database.group.update({
+            where: {
+                id: groupId
+            },
+            data: {
+                users: {
+                    connect: {
+                        id: userId
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        throw new Error('Database error, see server log for details.');
+    };
+}
+
 export default {
     getAllGroups,
     getGroupById,
+    createGroup,
+    removeUserFromGroup,
+    addUserToGroup,
 };

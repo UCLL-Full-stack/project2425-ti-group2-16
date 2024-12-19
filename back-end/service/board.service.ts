@@ -8,9 +8,19 @@ const getAllBoards = async (): Promise<Board[]> => {
 const getBoardById = async (id: number): Promise<Board> => {
     const board = await boardDb.getBoardById({id});
     return board;
+};
+
+const getBoardsWithGroupId = async (groupId: number): Promise<Board[]> => {
+    return await boardDb.getBoardsWithGroupId(groupId);
+};
+
+const createBoard = async (name: string, description: string, groupId: number): Promise<Board> => {
+    return await boardDb.createBoard({name, description, groupId});
 }
 
 export default {
     getAllBoards,
     getBoardById,
+    getBoardsWithGroupId,
+    createBoard,
 };

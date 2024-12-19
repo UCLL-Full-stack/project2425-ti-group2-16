@@ -47,16 +47,18 @@ const registerUser = async ({
             username,
             hashedPassword: await bcrypt.hash(password, 10),
             profile: userProfile,
-            groups: [],
+            memberOfGroups: [],
+            leaderOfGroups: []
         });
     
         userDb.createUser(newUser);
     
-        const JWT = generateJWTtoken(username);
+        const JWT = generateJWTtoken(username, [], []);
         const response = {
             token: JWT,
             username: username,
-            fullname: `${firstName} ${lastName}`
+            leaderOfGroups: [],
+            memberOfGroups: [],
         };
         return response;
     };
@@ -68,11 +70,12 @@ const authenticate = async ({ username, password}: { username: string, password:
     const hashedPassword = user.getHashedPassword();
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
     if (passwordsMatch) {
-        const JWT = generateJWTtoken(username);
-        const response = {
+        const JWT = generateJWTtoken(username, user.getMemberOfGroups(), user.getLeaderOfGroups());
+        const response: AuthenticationResponse = {
             token: JWT,
             username: username,
-            fullname: `${user.getProfile()?.getFirstName()} ${user.getProfile()?.getLastName()}`
+            leaderOfGroups: user.getLeaderOfGroups().map(group => group.getId() as number),
+            memberOfGroups: user.getMemberOfGroups().map(group => group.getId() as number)
         };
         return response;
     } else {
@@ -80,9 +83,22 @@ const authenticate = async ({ username, password}: { username: string, password:
     };
 };
 
+const getJWT = async (username: string): Promise<AuthenticationResponse> => {
+    const user = await userDb.getUserByUsername({username});
+    const JWT = generateJWTtoken(username, user.getMemberOfGroups(), user.getLeaderOfGroups());
+        const response: AuthenticationResponse = {
+            token: JWT,
+            username: username,
+            leaderOfGroups: user.getLeaderOfGroups().map(group => group.getId() as number),
+            memberOfGroups: user.getMemberOfGroups().map(group => group.getId() as number)
+        };
+        return response;
+};
+
 export default {
     getAllUsers,
     getUserById,
     registerUser,
     authenticate,
+    getJWT,
 };

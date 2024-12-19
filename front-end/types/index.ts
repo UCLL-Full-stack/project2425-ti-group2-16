@@ -3,7 +3,8 @@ export type User = {
     username: string;
     hashedPassword: string;
     profile?: Profile;
-    groups: Group[];
+    memberOfGroups: Group[];
+    leaderOfGroups: Group[];
     tasks: Task[];
 };
 
@@ -21,6 +22,7 @@ export type Group = {
     description: string;
     createdAt: Date;
     users: User[];
+    leader: User;
     boards: Board[];
 };
 
@@ -47,4 +49,11 @@ export type Task = {
     startDate: Date;
     endDate: Date;
     users: User[];
+};
+
+export type JWT = {
+    token?: string;
+    username?: string;
+    memberOfGroups?: number[];
+    leaderOfGroups?: number[];
 };
