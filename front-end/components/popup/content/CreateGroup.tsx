@@ -7,22 +7,42 @@ interface Props {
 }
 
 const CreateGroup: React.FC<Props> = ({setPopup}) => {
+    const [name, setName] = React.useState<string>('');
+    const [description, setDescription] = React.useState<string>('');
+
+    const [nameError, setNameError] = React.useState<string | null>(null);
     const [error, setError] = React.useState<string | null>(null);
 
     const createGroup = async (name: string, description: string) => {
-        const loggedInUser = sessionStorage.getItem('loggedInUser');
-        const username = loggedInUser ? JSON.parse(loggedInUser).username : null;
-        if (!username) {
-            setError('You must be logged in to create a group.');
-            return;
-        }
-        const response = await groupService.createGroup(username, name, description);
+        const response = await groupService.createGroup(name, description);
         if (response.ok) {
+            const autheticationResponse = await response.json();
+
+            sessionStorage.setItem(
+                'loggedInUser',
+                JSON.stringify({
+                    token: autheticationResponse.token,
+                    username: autheticationResponse.username,
+                    leaderOfGroups: autheticationResponse.leaderOfGroups,
+                    memberOfGroups: autheticationResponse.memberOfGroups,
+                })
+            );
+            
             mutate('groups');
             setPopup(false);
         } else {
             setError('Failed to create group.');
         };
+    };
+
+    const handleSubmit = () => {
+        setError(null);
+        setNameError(null);
+        if (!name) {
+            setNameError('Name is required.');
+            return;
+        }
+        createGroup(name, description);
     };
 
     return (
@@ -35,19 +55,21 @@ const CreateGroup: React.FC<Props> = ({setPopup}) => {
                     type="text"
                     placeholder="Name"
                     id="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
                 />
+                {nameError && <p className="text-red-500 text-center">{nameError}</p>}
                 <input
                     className="border border-gray-200 rounded p-2 m-2"
                     type="text"
                     placeholder="Description"
                     id="description"
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
                 />
                 <button
                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700"
-                    onClick={() => createGroup(
-                        (document.getElementById('name') as HTMLInputElement).value,
-                        (document.getElementById('description') as HTMLInputElement).value
-                    )}
+                    onClick={() => handleSubmit()}
                 >
                     Create
                 </button>

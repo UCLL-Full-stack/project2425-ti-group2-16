@@ -83,9 +83,22 @@ const authenticate = async ({ username, password}: { username: string, password:
     };
 };
 
+const getJWT = async (username: string): Promise<AuthenticationResponse> => {
+    const user = await userDb.getUserByUsername({username});
+    const JWT = generateJWTtoken(username, user.getMemberOfGroups(), user.getLeaderOfGroups());
+        const response: AuthenticationResponse = {
+            token: JWT,
+            username: username,
+            leaderOfGroups: user.getLeaderOfGroups().map(group => group.getId() as number),
+            memberOfGroups: user.getMemberOfGroups().map(group => group.getId() as number)
+        };
+        return response;
+};
+
 export default {
     getAllUsers,
     getUserById,
     registerUser,
     authenticate,
+    getJWT,
 };
