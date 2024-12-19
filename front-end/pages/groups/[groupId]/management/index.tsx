@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import GroupManagement from '@components/GroupManagement';
 import styles from '@styles/home.module.css';
-import { Group, User } from '@/types';
+import { Group, JWT, User } from '@/types';
 import useSWR, { mutate } from 'swr';
 import groupService from '@/services/groupService';
 import { useRouter } from 'next/router';
@@ -13,7 +13,15 @@ import AddUser from '@/components/popup/content/AddUser';
 
 const Users: React.FC = () => {
     const [popup, setPopup] = useState<boolean>(false);
+    const [jwt, setJwt] = useState<JWT>({});
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+            setJwt(JSON.parse(loggedInUser || '{}'));
+        }
+    }, []);
+    
     const router = useRouter();
     const { groupId } = router.query;
 
@@ -55,10 +63,10 @@ const Users: React.FC = () => {
             </Head>
             <Header />
             <main className={styles.main}>
-                {popup && users && <Popup setPopup={setPopup} content={<AddUser groupId={groupId as unknown as number} users={users}/>}/>}
+                {popup && users && <Popup setPopup={setPopup} content={<AddUser groupId={Number(groupId)} users={users}/>}/>}
                 {groupError && <div>Failed to get group</div>}
                 {group && <h1>{group.name}</h1>}
-                {!groupError && group && <GroupManagement group={group} openAddUserPopup={setPopup}/>}
+                {!groupError && group && <GroupManagement isLeader={jwt.leaderOfGroups?.includes(Number(groupId)) || false} group={group} openAddUserPopup={setPopup}/>}
             </main>
         </>
     );
