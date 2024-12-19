@@ -19,6 +19,15 @@
  *            description:
  *              type: string
  *              description: Task description.
+ *      TaskInput:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *              description: task name
+ *            description:
+ *              type: string
+ *              description: task description
  */
 import express, { NextFunction, Request, Response } from 'express';
 import taskService from '../service/task.service';
