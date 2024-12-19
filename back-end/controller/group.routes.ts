@@ -82,7 +82,10 @@ groupRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) 
 
 groupRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        return res.status(200).json(await groupService.createGroup(req.body));
+        const request = req as Request & { auth: {username: string} };
+        const { username } = request.auth;
+        const { name, description } = req.body;
+        return res.status(200).json(await groupService.createGroup({ name, description, username }));
     } catch (e) {
         next(error)
     }

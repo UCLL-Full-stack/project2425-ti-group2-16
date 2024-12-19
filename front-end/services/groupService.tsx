@@ -26,7 +26,7 @@ const getGroupById = (groupId: string) => {
     });
 };
 
-const createGroup = (username: string, name: string, description: string) => {
+const createGroup = (name: string, description: string) => {
     const token = getToken();
 
     return fetch(`${process.env.NEXT_PUBLIC_API_URL}/groups`, {
@@ -38,7 +38,6 @@ const createGroup = (username: string, name: string, description: string) => {
         body: JSON.stringify({
             name,
             description,
-            username,
         }),
     });
 };
