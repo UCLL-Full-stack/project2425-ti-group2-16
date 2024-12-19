@@ -8,9 +8,12 @@ interface Props {
 }
 
 const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
+    const [name, setName] = React.useState<string>('');
+    const [description, setDescription] = React.useState<string>('');
+
     const [error, setError] = React.useState<string | null>(null);
 
-    const createBoard = async (name: string, description: string) => {
+    const createBoard = async () => {
         const response = await boardService.createBoard(name, description, groupId);
         if (response.ok) {
             mutate(`group/${groupId}/boards`);
@@ -18,6 +21,15 @@ const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
         } else {
             setError('Failed to create board.');
         };
+    };
+
+    const handleSubmit = () => {
+        setError(null);
+        if (!name) {
+            setError('Name is required.');
+            return;
+        }
+        createBoard();
     };
 
     return (
@@ -30,19 +42,20 @@ const CreateBoard: React.FC<Props> = ({setPopup, groupId}) => {
                     type="text"
                     placeholder="Name"
                     id="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
                 />
                 <input
                     className="border border-gray-200 rounded p-2 m-2"
                     type="text"
                     placeholder="Description"
                     id="description"
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
                 />
                 <button
                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700"
-                    onClick={() => createBoard(
-                        (document.getElementById('name') as HTMLInputElement).value,
-                        (document.getElementById('description') as HTMLInputElement).value
-                    )}
+                    onClick={() => handleSubmit()}
                 >
                     Create
                 </button>
