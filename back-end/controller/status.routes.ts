@@ -16,10 +16,10 @@
  *            name:
  *              type: string
  *              description: Status name.
-//  *            tasks:
-//  *              type: array
-//  *              items:
- *                
+ *            tasks:
+ *              type: array
+ *              items:
+ *                $ref: "#/components/schemas/Task"
  */
 import express, { NextFunction, Request, Response } from 'express';
 import statusService from '../service/status.service';
