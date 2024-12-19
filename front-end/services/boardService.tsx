@@ -13,6 +13,17 @@ const getBoards = () => {
     });
 };
 
+const getBoardById = (id: number) => {
+    const token = getToken();
+
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/boards/${id}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
 const getBoardsWithGroupId = (groupId: String) => {
     const token = getToken();
 
@@ -43,6 +54,7 @@ const createBoard = (name: string, description: string, groupId: number) => {
 
 export default {
     getBoards,
+    getBoardById,
     getBoardsWithGroupId,
     createBoard,
 };

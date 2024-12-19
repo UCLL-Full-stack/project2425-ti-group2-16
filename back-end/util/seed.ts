@@ -170,7 +170,7 @@ const main = async () => {
         data: {
             name: 'Status 1',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -179,7 +179,7 @@ const main = async () => {
         data: {
             name: 'Status 2',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -188,7 +188,7 @@ const main = async () => {
         data: {
             name: 'Status 3',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group1board2.id },
             },
         },
     });
@@ -197,7 +197,7 @@ const main = async () => {
         data: {
             name: 'Status 1',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group2board1.id },
             },
         },
     });
@@ -206,7 +206,7 @@ const main = async () => {
         data: {
             name: 'Status 2',
             board: {
-                connect: { id: group1board1.id },
+                connect: { id: group2board1.id },
             },
         },
     });

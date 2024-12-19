@@ -1,11 +1,22 @@
 import React from 'react';
 import { Board } from '@/types';
+import { useRouter } from 'next/router';
 
 interface Props {
+    groupId: number;
     boards: Board[];
 }
 
-const BoardOverview: React.FC<Props> = ({ boards }) => {
+const BoardOverview: React.FC<Props> = ({ boards, groupId }) => {
+    const router = useRouter();
+    
+    const goToBoard = (boardId?: number) => () => {
+        if (!boardId) {
+            return;
+        }
+        router.push(`/groups/${groupId}/boards/${boardId}`);
+    };
+
     return (
         <>
             {boards &&
@@ -18,7 +29,11 @@ const BoardOverview: React.FC<Props> = ({ boards }) => {
                     </thead>
                     <tbody>
                         {boards.map(board => (
-                            <tr key={board.id} className="hover:bg-gray-50">
+                            <tr
+                            key={board.id}
+                            className="hover:bg-gray-50"
+                            onClick={goToBoard(board.id)}
+                            >
                                 <td className="py-2 px-4 border-b border-gray-200">{board.name}</td>
                                 <td className="py-2 px-4 border-b border-gray-200">{board.description}</td>
                             </tr>

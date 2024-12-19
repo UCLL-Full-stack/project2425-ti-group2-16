@@ -82,4 +82,8 @@ taskRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) =
     return res.status(200).json(await taskService.getTaskById(parseInt(req.params.id)));
 });
 
+taskRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    return res.status(201).json(await taskService.createTask(req.body));
+});
+
 export { taskRouter };

@@ -48,7 +48,7 @@ const Boards: React.FC = () => {
                     > Create Board </button>
                 }
                 {error && <div>Failed to load boards</div>}
-                {!error && boards && <BoardOverview boards={boards} />}
+                {!error && boards && <BoardOverview groupId={Number(groupId)} boards={boards} />}
                 {popup && <Popup setPopup={setPopup} content={<CreateBoard setPopup={setPopup} groupId={Number(groupId)}/>} />}
             </main>
         </>
