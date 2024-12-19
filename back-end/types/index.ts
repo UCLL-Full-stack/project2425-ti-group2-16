@@ -27,6 +27,12 @@ type BoardInput = {
     tasks?: TaskInput[];
 };
 
+type StatusInput = {
+    id?: number;
+    name?: string;
+    tasks?: TaskInput[];
+};
+
 type TaskInput = {
     id?: number;
     name?: string;
@@ -55,4 +61,4 @@ type AuthenticationRequest = {
     memberOfGroups: number[];
 };
 
-export { UserInput, GroupInput, BoardInput, TaskInput, ProfileInput, AuthenticationResponse, AuthenticationRequest };
+export { UserInput, GroupInput, BoardInput, StatusInput, TaskInput, ProfileInput, AuthenticationResponse, AuthenticationRequest };

@@ -31,7 +31,6 @@ const Boards: React.FC = () => {
 
     const { data: boards = [], error } = useSWR<Board[]>(groupId ? `group/${groupId}/boards` : null, fetcher);
 
-    console.log(boards);
     return (
         <>
             <Head>

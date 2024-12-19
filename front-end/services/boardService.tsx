@@ -1,3 +1,6 @@
+import { Status } from "@/types";
+import { stat } from "fs";
+
 const getToken = () => {
     return JSON.parse(sessionStorage.getItem('loggedInUser') || '{}').token;
 }
@@ -35,7 +38,7 @@ const getBoardsWithGroupId = (groupId: String) => {
     });
 };
 
-const createBoard = (name: string, description: string, groupId: number) => {
+const createBoard = (name: string, description: string, groupId: number, statuses: Status[]) => {
     const token = getToken();
 
     return fetch(`${process.env.NEXT_PUBLIC_API_URL}/boards`, {
@@ -48,6 +51,7 @@ const createBoard = (name: string, description: string, groupId: number) => {
             name,
             description,
             groupId,
+            statuses,
         }),
     });
 };

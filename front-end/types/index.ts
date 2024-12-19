@@ -36,8 +36,8 @@ export type Board = {
 
 export type Status = {
     id?: number;
-    name: string;
-    tasks: Task[];
+    name?: string;
+    tasks?: Task[];
 };
 
 export type Task = {
