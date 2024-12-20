@@ -1,3 +1,33 @@
 {
-    "app.title": "Kanban esoterische editie"
+  "app.title": "Kanban esoterische editie",
+  "app.welcome": "Welkom!",
+  "app.language": "Taal",
+  "header": {
+    "home": "Home",
+    "register": "Registreren",
+    "login": "Inloggen",
+    "logout": "Uitloggen",
+    "groups": "Groepen",
+    "loggedIn": "Ingelogd als"
+  },
+  "register": {
+    "username": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "Email",
+    "bio": "Beschrijving"
+  },
+  "groups": {
+    "header": "Uw groepen",
+    "create": "Maak een groep aan",
+    "error": "Groepen laden mislukt",
+    "table": {
+      "name": "Naam",
+      "description": "Beschrijving",
+      "boards": "Borden",
+      "manage": "Beheren",
+      "error": "Geen groepen gevonden"
+    }
+  }
 }

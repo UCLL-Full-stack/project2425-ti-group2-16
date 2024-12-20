@@ -1,3 +1,33 @@
 {
-    "app.title": "Kanban esoteric edition"
+  "app.title": "Kanban esoteric edition",
+  "app.welcome": "Welcome!",
+  "app.language": "Language",
+  "header": {
+    "home": "Home",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout",
+    "groups": "Groups",
+    "loggedIn": "Logged in as"
+  },
+  "register": {
+    "username": "Username",
+    "password": "Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "bio": "Bio"
+  },
+  "groups": {
+    "header": "Your groups",
+    "create": "Create group",
+    "error": "Failed to load groups",
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "boards": "Boards",
+      "manage": "Manage",
+      "error": "No groups found"
+    }
+  }
 }
