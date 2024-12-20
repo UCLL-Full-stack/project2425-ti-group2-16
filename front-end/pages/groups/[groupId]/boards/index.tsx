@@ -9,6 +9,9 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Popup from '@/components/popup/Popup';
 import CreateBoard from '@/components/popup/content/CreateBoard';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
 
 const Boards: React.FC = () => {
     const [popup, setPopup] = useState<boolean>(false);
@@ -52,6 +55,16 @@ const Boards: React.FC = () => {
             </main>
         </>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { locale } = context;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"])),
+    },
+  };
 };
 
 export default Boards;

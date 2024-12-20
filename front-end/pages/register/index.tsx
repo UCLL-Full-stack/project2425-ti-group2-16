@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "@components/header";
+import Header from "@/components/Header";
 import RegisterForm from "@components/registerForm";
 import styles from "@styles/home.module.css";
 import { GetServerSideProps } from "next";

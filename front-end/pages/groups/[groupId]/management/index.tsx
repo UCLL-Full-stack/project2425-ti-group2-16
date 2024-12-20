@@ -10,6 +10,9 @@ import { use, useEffect, useState } from 'react';
 import userService from '@/services/userService';
 import Popup from '@/components/popup/Popup';
 import AddUser from '@/components/popup/content/AddUser';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import { GetServerSideProps } from "next";
 
 const Users: React.FC = () => {
     const [popup, setPopup] = useState<boolean>(false);
@@ -70,6 +73,16 @@ const Users: React.FC = () => {
             </main>
         </>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { locale } = context;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"])),
+    },
+  };
 };
 
 export default Users;

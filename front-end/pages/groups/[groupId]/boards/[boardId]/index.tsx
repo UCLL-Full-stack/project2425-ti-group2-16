@@ -9,6 +9,9 @@ import React, { useState } from 'react';
 import Popup from '@/components/popup/Popup';
 import BoardContent from '@/components/board/BoardContent';
 import CreateTask from '@/components/popup/content/CreateTask';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
 
 const BoardPage: React.FC = () => {
     const [popup, setPopup] = useState<Status | null>(null);
@@ -37,6 +40,16 @@ const BoardPage: React.FC = () => {
             </main>
         </>
     );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { locale } = context;
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? "en", ["common"])),
+    },
+  };
 };
 
 export default BoardPage;
